@@ -9,21 +9,20 @@
 
 int main(void)
 {
-char letter = 'a'; /* Start with 'a'*/
+char letter;
 
-while (letter <= 'z')
+/* Print the lowercase alphabet from 'a' to 'z'*/
+for (letter = 'a'; letter <= 'z'; letter++)
 {
 putchar(letter); /* Print the current lowercase letter*/
+}
 
-if (letter == 'z')
+/* Print the uppercase alphabet from 'A' to 'Z'*/
+for (letter = 'A'; letter <= 'Z'; letter++)
 {
-letter = 'A'; /* Reset to 'A' after 'z'*/
+putchar(letter); /* Print the current uppercase letter*/
+}
 putchar('\n'); /* Print a new line*/
-}
-else
-{
-letter++; /* Move to the next lowercase letter*/
-}
-}
+
 return (0);
 }
