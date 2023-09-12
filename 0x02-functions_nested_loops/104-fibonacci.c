@@ -1,36 +1,48 @@
-/*
- * This C program prints the first 98 Fibonacci
- * numbers starting with 1 and 2,
- * separated by a comma and space, followed by
- * a newline. It does not use any
- * libraries other than the standard library,
- * and does not use long long, malloc,
- * pointers, arrays/tables, or structures.
- */
-
 #include <stdio.h>
 
 /**
- * main - check the code.
+ * main - fibonacci <3
  *
- * Return: Always 0.
+ * Purpose - no hardcode
+ *
+ * Return:  (Success)
  */
+
 
 int main(void)
 {
-int i, current = 1, next = 2;
+unsigned long int i;
+unsigned long int bef = 1;
+unsigned long int aft = 2;
+unsigned long int l = 1000000000;
+unsigned long int bef1;
+unsigned long int bef2;
+unsigned long int aft1;
+unsigned long int aft2;
 
-printf("%d, %d", current, next);
+printf("%lu", bef);
 
-for (i = 2; i < 98; i++)
-{ /* start loop from 2 since we already printed first 2 numbers*/
-int temp = next; /* store next value to avoid overwriting*/
-next += current; /* calculate next value*/
-current = temp; /* set current to previous next value*/
-printf(", %d", next); /* print next value, separated by comma and space*/
+for (i = 1; i < 91; i++)
+{
+printf(", %lu", aft);
+aft += bef;
+bef = aft - bef;
 }
 
-printf("\n"); /* print newline character at end*/
+bef1 = (bef / l);
+bef2 = (bef % l);
+aft1 = (aft / l);
+aft2 = (aft % l);
 
+for (i = 92; i < 99; ++i)
+{
+printf(", %lu", aft1 + (aft2 / l));
+printf("%lu", aft2 % l);
+aft1 = aft1 + bef1;
+bef1 = aft1 - bef1;
+aft2 = aft2 + bef2;
+bef2 = aft2 - bef2;
+}
+printf("\n");
 return (0);
 }
