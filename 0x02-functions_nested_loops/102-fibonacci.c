@@ -7,16 +7,21 @@
  */
 int main(void)
 {
-int i, count = 50, fib1 = 1, fib2 = 2, next_fib;
+int n = 50; /* Number of Fibonacci numbers to print*/
+long long int fib1 = 1, fib2 = 2, next;
 
-printf("%d, %d", fib1, fib2);
+/* Print the first two Fibonacci numbers*/
+printf("%lld, %lld", fib1, fib2);
 
-for (i = 2; i < count; i++)
+/* Calculate and print the remaining Fibonacci numbers*/
+for (int i = 3; i <= n; i++)
 {
-next_fib = fib1 + fib2;
-printf(", %d", next_fib);
+next = fib1 + fib2;
+printf(", %lld", next);
+
+/* Update values for the next iteration*/
 fib1 = fib2;
-fib2 = next_fib;
+fib2 = next;
 }
 
 printf("\n");
