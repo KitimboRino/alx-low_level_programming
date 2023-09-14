@@ -1,11 +1,13 @@
-#include "main.h"
 #include <stdio.h>
 
 /**
- * main - Entry point
+ * main - check the code.
  *
- * Return: Always 0 (Success)
+ *description: fizz buzz
+ *
+ * Return: Always
  */
+
 int main(void)
 {
 int i;
@@ -13,23 +15,18 @@ int i;
 for (i = 1; i <= 100; i++)
 {
 if (i % 3 == 0 && i % 5 == 0)
-{
-printf("FizzBuzz ");
-}
-else if (i % 3 == 0)
-{
-printf("Fizz ");
-}
-else if (i % 5 == 0)
-{
-printf("Buzz ");
-}
+printf("FizzBuzz");
+
+else if ((i % 3) == 0)
+printf("Fizz");
+
+else if ((i % 5) == 0)
+printf("Buzz");
 else
-{
-printf("%d ", i);
-}
+printf("%i", i);
+if (i < 100)
+printf(" ");
 }
 printf("\n");
-
 return (0);
 }
