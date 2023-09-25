@@ -20,6 +20,10 @@ return (s); /* Return a pointer to the first occurrence of c */
 }
 s++; /* Move to the next character in the string */
 }
+if (c == '\0')
+{
+return (s);
+}
 /* If character c is not found, return NULL */
 return (NULL);
 }
