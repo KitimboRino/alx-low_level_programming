@@ -11,24 +11,32 @@
 
 char *_strstr(char *haystack, char *needle)
 {
+/* Temporary pointers for iteration */
+char *haystack_tmp, *needle_tmp;
+
+/* Iterate through the haystack string */
 while (*haystack != '\0')
 {
-char *start = haystack;
+/* Save the current position in haystack */
+haystack_tmp = haystack;
+/* Initialize needle_tmp for comparison */
+needle_tmp = needle;
 
-while (*haystack != '\0' && *needle != '\0' && *haystack == *needle)
+/* Compare characters in both haystack and needle */
+while (*needle_tmp == *haystack_tmp && *needle_tmp != '\0'
+&& *haystack_tmp != '\0')
 {
-haystack++;
-needle++;
+needle_tmp++;
+haystack_tmp++;
 }
 
-if (*needle == '\0')
-{
-return (start);
+if (*needle_tmp == '\0')
+/* Return a pointer to the beginning of the located substring */
+return (haystack);
+
+haystack++; /* Move to the next character in haystack */
 }
 
-haystack = start + 1;
-needle = needle - (needle - start) + 1;
-}
-
+/* Substring not found */
 return (NULL);
 }
