@@ -10,9 +10,10 @@ void _print_rev_recursion(char *s)
 /* Base case: Check for the null terminator */
 if (*s == '\0')
 {
+return;
+}
 /*Recursively call the function with the next character */
 _print_rev_recursion(s + 1);
 /* Print the current character after the recursive call */
 putchar(*s);
-}
 }
