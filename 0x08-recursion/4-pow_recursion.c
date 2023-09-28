@@ -1,3 +1,5 @@
+#include "main.h"
+
 /**
  * _pow_recursion - Calculates x raised to the power of y
  * recursively,.
