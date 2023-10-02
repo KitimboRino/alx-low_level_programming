@@ -3,26 +3,21 @@
 
 /**
  * main - multiplies two numbers
- * @argc: argument count
- * @argv: argument vector
+ * @argc: number of command line arg...
+ * @argv: the array that conatins the coammand line arg
  *
  * Return: 0 if success, 1 otherwise
  */
+
 int main(int argc, char *argv[])
 {
-int num1, num2, result;
-
 if (argc != 3)
 {
 printf("Error\n");
 return (1);
 }
 
-num1 = atoi(argv[1]);
-num2 = atoi(argv[2]);
-int result = (num1 * num2);
-
-printf("%d\n", result);
+printf("%d\n", atoi(argv[1]) * atoi(argv[2]));
 
 return (0);
 }
