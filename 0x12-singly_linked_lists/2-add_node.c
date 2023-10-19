@@ -9,39 +9,22 @@
  *
  * Return: the address of the new element, or NULL if it fails
  */
-
 list_t *add_node(list_t **head, const char *str)
 {
-	if (str == NULL)
-	{
-		/* Return NULL if the input string is NULL */
+	list_t *new;
+	unsigned int len = 0;
+
+	while (str[len])
+		len++;
+
+	new = malloc(sizeof(list_t));
+	if (!new)
 		return (NULL);
-	}
 
-	list_t *new_node = (list_t *)malloc(sizeof(list_t));
+	new->str = strdup(str);
+	new->len = len;
+	new->next = (*head);
+	(*head) = new;
 
-	if (new_node == NULL)
-	{
-		/* Return NULL if memory allocation fails */
-		return (NULL);
-	}
-
-	/* Duplicate the input string */
-	new_node->str = strdup(str);
-
-	if (new_node->str == NULL)
-	{
-	free(new_node);
-
-	/* Return NULL if string duplication fails */
-	return (NULL);
-	}
-
-
-	/* Set the new node's next pointer to the current head */
-	new_node->next = *head;
-	/* Update the head to point to the new node */
-	*head = new_node;
-	/* Return the address of the new element*/
-	return (new_node);
+	return (*head);
 }
