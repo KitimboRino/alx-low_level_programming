@@ -12,7 +12,7 @@
 size_t print_list(const list_t *h)
 {
 /* Initialize a counter for the number of nodes printed. */
-size_t s = 0;
+size_t node_count = 0;
 
 /* Iterate throught the linked list. */
 while (h)
@@ -27,8 +27,8 @@ printf("[%u] %s\n", h->len, h->str);
 
 /* Move to the nextx node in th list. */
 h = h->next;
-s++;
+node_count++;
 }
 
-return (s);
+return (node_count);
 }
