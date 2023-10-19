@@ -7,7 +7,7 @@
  * @head: double pointer to the list_t list
  * @str: string to put in the new node
  *
- * Return: address of the new element, or NULL if it failed
+ * Return: address of the new element, or NULL if memory allocation fails
  */
 
 list_t *add_node_end(list_t **head, const char *str)
@@ -36,13 +36,8 @@ if (*head == NULL)
 return (new);
 }
 
-/**
- * Else, taverse the list to find the last node and append
- * the new node.
-*/
 while (temp->next)
 temp = temp->next;
-
 temp->next = new;
 
 return (new);
