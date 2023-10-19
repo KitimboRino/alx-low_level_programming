@@ -12,38 +12,38 @@
 
 list_t *add_node_end(list_t **head, const char *str)
 {
-	list_t *new;
-	list_t *temp = *head;
-	unsigned int len = 0;
+list_t *new;
+list_t *temp = *head;
+unsigned int len = 0;
 
-	while (str[len])
-		len++;
+while (str[len])
+len++;
 
-	/* Allocate memory for the new node. */
-	new = malloc(sizeof(list_t));
-	if (!new)
-		return (NULL);
+/* Allocate memory for the new node. */
+new = malloc(sizeof(list_t));
+if (!new)
+return (NULL);
 
-	/* Duplicate the input string and populate the new node. */
-	new->str = strdup(str);
-	new->len = len;
-	new->next = NULL;
+/* Duplicate the input string and populate the new node. */
+new->str = strdup(str);
+new->len = len;
+new->next = NULL;
 
-	/* If the list is initially empty, make the new node the head. */
-	if (*head == NULL)
-	{
-		*head = new;
-		return (new);
-	}
+/* If the list is initially empty, make the new node the head. */
+if (*head == NULL)
+{
+*head = new;
+return (new);
+}
 
-	/**
-	 * Else, taverse the list to find the last node and append
-	 * the new node.
-	*/
-	while (temp->next)
-		temp = temp->next;
+/**
+ * Else, taverse the list to find the last node and append
+ * the new node.
+*/
+while (temp->next)
+temp = temp->next;
 
-	temp->next = new;
+temp->next = new;
 
-	return (new);
+return (new);
 }
