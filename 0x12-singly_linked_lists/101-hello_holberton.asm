@@ -8,4 +8,4 @@ main:
     mov eax, 0        ; Set the return value to 0 (return success)
     ret               ; Return from the main function
 
-format db "Hello, Holberton\n", 0  ; The format string
+format db "Hello, Holberton",10,0  ; The format string, 10 represents a new line
