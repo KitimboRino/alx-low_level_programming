@@ -10,22 +10,33 @@
 
 size_t free_listint_safe(listint_t **h)
 {
-size_t size = 0; /* Initialize the size of the list */
+size_t count = 0; /* Initialize the count of freed nodes */
+int diff; /* Variable to calculate the difference in memory addresses */
+listint_t *temp; /* Temporary pointer for node manipulation */
 
-if (h == NULL || *h == NULL)
+if (!h || !*h)
 return (0); /* If the list is empty or invalid, return 0 */
 
-while (*h != NULL)
+while (*h)
 {
-listint_t *temp = *h; /* Create a temporary pointer to the current node */
-*h = (*h)->next; /* Move the head to the next node */
-
-free(temp); /* Free the current node */
-
-/* Increment the size */
-size++;
+diff = *h - (*h)->next; /* Calculate the difference in memory addresses */
+if (diff > 0)
+{
+temp = (*h)->next;
+free(*h); /* Free the current node */
+*h = temp; /* Move the head to the next node */
+count++; /* Increment the count */
+}
+else
+{
+free(*h); /* Free the current node */
+*h = NULL; /* Set the head to NULL */
+count++; /* Increment the count */
+break; /* Exit the loop if a loop is detected */
+}
 }
 
-/* Return the size of the list that was freed */
-return (size);
+*h = NULL; /* Set the head to NULL */
+
+return (count); /* Return the size of the list that was freed */
 }
