@@ -1,59 +1,90 @@
-#include "main.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <elf.h>
 
 /**
- * main - Entry point of the program
- * @argc: Number of command-line arguments
- * @argv: Array of command-line argument strings
- * Return: 0 on success
+ * error_exit - Prints an error message to stderr and exits with status 98.
+ * @message: The error message to print.
+ */
+
+void error_exit(char *message)
+{
+dprintf(2, "%s", message);
+exit(98);
+}
+
+/**
+ * print_elf_header - Prints information from the ELF header.
+ * @header: A pointer to the ELF header.
+ */
+
+void print_elf_header(Elf64_Ehdr *header)
+{
+int i;
+
+printf("ELF Header:\n");
+printf("  Magic:   ");
+for (i = 0; i < EI_NIDENT; i++)
+{
+printf("%02x", header->e_ident[i]);
+if (i < EI_NIDENT - 1)
+printf(" ");
+}
+printf("\n");
+printf("  Class:   %s\n",
+header->e_ident[EI_CLASS] == ELFCLASS32 ? "ELF32" : "ELF64"
+);
+printf("  Data:    %s\n",
+header->e_ident[EI_DATA] == ELFDATA2LSB ?
+"2's complement, little-endian" :
+"2's complement, big-endian"
+);
+printf("Version: %d (current)\n", header->e_ident[EI_VERSION]);
+printf("OS/ABI:  %d\n", header->e_ident[EI_OSABI]);
+printf("ABI Version: %d\n", header->e_ident[EI_ABIVERSION]);
+printf("Type: %s\n",
+header->e_type == ET_REL ? "REL (Relocatable file)" :
+header->e_type == ET_EXEC ? "EXEC (Executable file)" :
+header->e_type == ET_DYN ? "DYN (Shared object file)" :
+header->e_type == ET_CORE ? "CORE (Core file)" : "UNKNOWN (Unknown type)"
+);
+printf("  Entry point address: %#lx\n", header->e_entry);
+}
+
+/**
+ * main - The entry point of the ELF header information program.
+ * @argc: The number of command-line arguments.
+ * @argv: An array of command-line argument strings.
+ * Return: 0 on successful execution, 98 on errors.
  */
 
 int main(int argc, char *argv[])
 {
-int f;          /* File descriptor */
-ssize_t s;       /* Read operation result */
-char buffer[5];  /* Buffer to read the first 4 bytes */
-char elf[1];    /* Buffer to read the ELF magic number ('E') */
+int fd;
+Elf64_Ehdr header;
 
-/* Check if the correct number of command-line arguments is provided */
 if (argc != 2)
+error_exit("Usage: elf_header elf_filename\n");
+
+fd = open(argv[1], O_RDONLY);
+if (fd == -1)
+error_exit("Error: Can't read from file\n");
+
+if (read(fd, &header, sizeof(Elf64_Ehdr)) == -1)
+error_exit("Error: Can't read from file\n");
+
+if (header.e_ident[EI_MAG0] != ELFMAG0 ||
+header.e_ident[EI_MAG1] != ELFMAG1 ||
+header.e_ident[EI_MAG2] != ELFMAG2 ||
+header.e_ident[EI_MAG3] != ELFMAG3)
 {
-dprintf(STDERR_FILENO, "Usage: cp file\n");
-exit(97);
+error_exit("Error: Not an ELF file\n");
 }
 
-/* Open the file for reading and writing */
-f = open(argv[1], O_RDWR);
+print_elf_header(&header);
 
-/* Check if the file cannot be opened */
-if (f == -1)
-{
-dprintf(STDERR_FILENO, "Error: Can't open from file %s\n", argv[1]);
-exit(98);
-}
-
-/* Read the first 4 bytes from the file into the buffer */
-s = read(f, buffer, 4);
-
-/* Check if the read operation fails */
-if (s == -1)
-{
-dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
-exit(98);
-}
-
-/* Move the file offset by 1 byte to skip one byte */
-s = lseek(f, 1, SEEK_SET);
-
-/* Read 1 byte from the file into the 'elf' buffer */
-s = read(f, elf, 1);
-
-/* Check if the 'elf' byte is not 'E' */
-if (elf[0] != 'E')
-exit(98); /* Not a valid ELF file */
-
-/* Close the file */
-close(f);
-
+close(fd);
 return (0);
 }
