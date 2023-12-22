@@ -7,8 +7,8 @@
  */
 void hash_table_delete(hash_table_t *ht)
 {
-    hash_node_t *bucket, *aux_free;
-    unsigned long int i = 0;
+hash_node_t *bucket, *aux_free;
+unsigned long int i = 0;
 
 /* Check if the hash table is NULL */
 if (!ht)
